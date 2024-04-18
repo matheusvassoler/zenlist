@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:zenlist/data/product_dao.dart';
+import 'package:zenlist/screens/add_product.dart';
 
 import '../model/product.dart';
 
 class ShoppingItem extends StatelessWidget {
   final Product product;
   final Function onProductDelete;
-  const ShoppingItem({super.key, required this.product, required this.onProductDelete});
+  final Function onProductUpdate;
+  const ShoppingItem({super.key, required this.product, required this.onProductDelete, required this.onProductUpdate});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,12 @@ class ShoppingItem extends StatelessWidget {
       onLongPress: () {
         ProductDAO().deleteProduct(product);
         onProductDelete();
+      },
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProduct(product: product))
+        ).then((value) => onProductUpdate());
       },
       child: SizedBox(
         height: 80,

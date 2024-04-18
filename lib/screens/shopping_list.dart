@@ -61,7 +61,12 @@ class _ShoppingListState extends State<ShoppingList> {
                                 setState(() {
 
                                 });
-                              }
+                              },
+                              onProductUpdate: () {
+                                setState(() {
+
+                                });
+                              },
                             );
                           }
                       ),

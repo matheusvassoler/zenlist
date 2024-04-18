@@ -7,11 +7,15 @@ class AddProduct extends StatelessWidget {
   final nameFieldController = TextEditingController();
   final quantityFieldController = TextEditingController();
   final priceFieldController = TextEditingController();
+  final Product? product;
 
-  AddProduct({super.key});
+  AddProduct({super.key, this.product});
 
   @override
   Widget build(BuildContext context) {
+    nameFieldController.text = product?.name ?? "";
+    quantityFieldController.text = product?.quantity.toString() ?? "";
+    priceFieldController.text = product?.price.toString() ?? "";
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicionar Produto"),
@@ -25,7 +29,7 @@ class AddProduct extends StatelessWidget {
                   controller: nameFieldController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: "Nome do produto"
+                    hintText: "Nome do produto",
                   )
                 ),
                 Padding(
@@ -61,7 +65,7 @@ class AddProduct extends StatelessWidget {
                       onPressed: () async {
                         await ProductDAO().addProduct(
                           Product(
-                            null,
+                            product?.id,
                             nameFieldController.text,
                             int.parse(quantityFieldController.text),
                             double.parse(priceFieldController.text)

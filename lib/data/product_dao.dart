@@ -15,7 +15,11 @@ class ProductDAO {
   addProduct(Product product) async {
     Database db = await getDatabase();
     Map<String, dynamic> productMap = _toMap(product);
-    db.insert(productsTable, productMap);
+    if (product.id == null) {
+      db.insert(productsTable, productMap);
+    } else {
+      db.update(productsTable, productMap, where: "id = ?", whereArgs: [product.id]);
+    }
   }
 
   deleteProduct(Product product) async {

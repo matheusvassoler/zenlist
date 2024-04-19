@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:zenlist/components/shopping_item.dart';
 import 'package:zenlist/data/product_dao.dart';
 import 'package:zenlist/model/product.dart';
-import 'package:zenlist/screens/add_product.dart';
+import 'package:zenlist/screens/android/add_product_android.dart';
 
-class ShoppingList extends StatefulWidget {
-  ShoppingList({super.key});
+class ShoppingListAndroid extends StatefulWidget {
+  const ShoppingListAndroid({super.key});
 
   @override
-  State<ShoppingList> createState() => _ShoppingListState();
+  State<ShoppingListAndroid> createState() => _ShoppingListAndroidState();
 }
 
-class _ShoppingListState extends State<ShoppingList> {
+class _ShoppingListAndroidState extends State<ShoppingListAndroid> {
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,29 @@ class _ShoppingListState extends State<ShoppingList> {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              ProductDAO().deleteAllProducts();
-              setState(() {});
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Excluir todos os produtos"),
+                    content: Text("Deseja realmente excluir todos os produtos?"),
+                    actions: [
+                      TextButton(
+                        child: Text("Não"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      TextButton(
+                        child: Text("Sim"),
+                        onPressed: () {
+                          ProductDAO().deleteAllProducts();
+                          Navigator.pop(context);
+                          setState(() {});
+                        },
+                      )
+                    ],
+                  );
+                }
+              );
             },
           ),
           IconButton(
@@ -31,7 +52,7 @@ class _ShoppingListState extends State<ShoppingList> {
             onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddProduct())
+                  MaterialPageRoute(builder: (context) => AddProductAndroid())
               ).then((value) => setState(() {}));
             },
           ),
@@ -53,6 +74,7 @@ class _ShoppingListState extends State<ShoppingList> {
                   children: [
                     Expanded(
                       child: ListView.builder(
+                          padding: EdgeInsets.only(top: 16.0, left: 8.0, right: 8.0),
                           itemCount: products.length,
                           itemBuilder: (context, index) {
                             return ShoppingItem(
@@ -82,7 +104,7 @@ class _ShoppingListState extends State<ShoppingList> {
                         width: double.infinity,
                         height: 40,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: EdgeInsets.symmetric(horizontal: 12.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

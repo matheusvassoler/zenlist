@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:zenlist/data/product_dao.dart';
 import 'package:zenlist/model/product.dart';
 
-class AddProduct extends StatelessWidget {
+class AddProductAndroid extends StatelessWidget {
   final nameFieldController = TextEditingController();
   final quantityFieldController = TextEditingController();
   final priceFieldController = TextEditingController();
   final Product? product;
 
-  AddProduct({super.key, this.product});
+  AddProductAndroid({super.key, this.product});
 
   @override
   Widget build(BuildContext context) {
